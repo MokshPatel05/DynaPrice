@@ -14,7 +14,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   isBackendOnline,
   secondsLeft,
-  totalSeconds,
   onSimulate,
 }) => {
   const { user, logout } = useAuth();

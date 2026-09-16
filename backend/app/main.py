@@ -85,11 +85,11 @@ async def security_headers_middleware(request: Request, call_next) -> Response:
 
 
 # ── CORS (M1, M5 fix) ─────────────────────────────────────────────────────────
-# - Restricted to specific methods and headers (no wildcard)
-# - allow_credentials=True so cookie-based auth can be adopted later
+# - Restricted to specific methods and headers
+# - Allow localhost for dev and *.onrender.com for production deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?",
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?|https?://.*\.onrender\.com",
     allow_credentials=True,
     allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type"],

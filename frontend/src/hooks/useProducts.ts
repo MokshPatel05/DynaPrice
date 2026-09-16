@@ -33,9 +33,10 @@ function toProduct(p: ProductApiResponse): Product {
   };
 }
 
-/** Apply price-change % with base-price floor */
+/** Apply price-change % with base-price floor and 1.5x ceiling */
 function applyPriceChange(current: number, base: number, pct: number): number {
-  return Math.max(current * (1 + pct / 100), base);
+  const newPrice = current * (1 + pct / 100);
+  return Math.min(Math.max(newPrice, base), base * 1.5);
 }
 
 interface UseProductsReturn {

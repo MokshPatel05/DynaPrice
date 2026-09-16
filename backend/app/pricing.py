@@ -32,12 +32,13 @@ def apply_price_change(
 ) -> float:
     """
     Apply a price-change percentage to the current price, then enforce
-    the base-price floor rule:
+    the base-price floor rule and the 1.5x price ceiling rule:
 
         new_price = current_price * (1 + price_change_pct / 100)
-        new_price = max(new_price, base_price)   # never drop below base
+        new_price = max(new_price, base_price)     # never drop below base
+        new_price = min(new_price, base_price * 1.5) # never exceed 50% increase
 
-    The floor is enforced server-side here so it's consistent regardless
+    The limits are enforced server-side here so it's consistent regardless
     of what client calls this logic.
 
     Args:
@@ -46,7 +47,7 @@ def apply_price_change(
         price_change_pct: Predicted change percentage (already clamped).
 
     Returns:
-        The new price, always >= base_price.
+        The new price, constrained between base_price and base_price * 1.5.
     """
     new_price = current_price * (1.0 + price_change_pct / 100.0)
-    return max(new_price, base_price)
+    return min(max(new_price, base_price), base_price * 1.5)

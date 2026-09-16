@@ -45,6 +45,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, isFlashing = 
   const priceDelta = currentPrice - basePrice;
   const isAtBase = Math.abs(priceDelta) < 0.005;
   const isUp = priceDelta > 0.005;
+  const isTopProduct = currentPrice >= (basePrice * 1.5) - 0.005;
 
   const accentClass = CATEGORY_ACCENTS[category] ?? 'border-t-black';
   const badgeBg = CATEGORY_BG[category] ?? 'bg-gray-200';
@@ -55,11 +56,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, isFlashing = 
       {/* Card header */}
       <div className="p-4 pb-3">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <span
-            className={`text-xs font-black uppercase tracking-widest px-2 py-0.5 border border-black ${badgeBg}`}
-          >
-            {category}
-          </span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span
+              className={`text-xs font-black uppercase tracking-widest px-2 py-0.5 border border-black ${badgeBg}`}
+            >
+              {category}
+            </span>
+            {isTopProduct && (
+              <span className="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border border-black bg-neo-red text-white flex items-center gap-1 shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                🔥 Top
+              </span>
+            )}
+          </div>
           <div className="flex items-center gap-1.5">
             {lastChangePct !== null && (
               <span

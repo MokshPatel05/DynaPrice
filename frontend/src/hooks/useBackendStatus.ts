@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { healthCheck } from '../lib/api';
 
-const POLL_INTERVAL_MS = 15_000; // poll every 15 seconds
+const POLL_INTERVAL_MS = 300_000; // poll every 5 minutes
 
 export function useBackendStatus(): boolean {
   const [isOnline, setIsOnline] = useState<boolean>(false);

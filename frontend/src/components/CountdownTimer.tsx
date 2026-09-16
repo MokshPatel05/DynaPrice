@@ -2,12 +2,10 @@ import React from 'react';
 
 interface CountdownTimerProps {
   secondsLeft: number;
-  totalSeconds: number;
 }
 
 export const CountdownTimer: React.FC<CountdownTimerProps> = ({
   secondsLeft,
-  totalSeconds,
 }) => {
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;

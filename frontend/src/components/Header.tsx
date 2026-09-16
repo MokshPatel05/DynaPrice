@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Countdown */}
-          <CountdownTimer secondsLeft={secondsLeft} totalSeconds={totalSeconds} />
+          <CountdownTimer secondsLeft={secondsLeft} />
 
           {/* Simulate button */}
           <NeoButton variant="secondary" size="md" onClick={onSimulate} id="simulate-btn">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { loadLastTick, saveLastTick } from '../lib/storage';
 
 const TICK_INTERVAL_MS = 60_000; // 60 seconds
@@ -30,13 +30,7 @@ export function useCountdown(onTick: () => void): UseCountdownReturn {
   }, [onTick]);
 
   // Store the absolute time when the next tick should fire
-  const nextTickAt = useRef<number>(() => {
-    const last = loadLastTick();
-    if (!last) return Date.now() + TICK_INTERVAL_MS;
-    const elapsed = Date.now() - last;
-    const remaining = TICK_INTERVAL_MS - (elapsed % TICK_INTERVAL_MS);
-    return Date.now() + remaining;
-  });
+  const nextTickAt = useRef<number>(0);
   // initialise nextTickAt on mount
   useEffect(() => {
     const last = loadLastTick();

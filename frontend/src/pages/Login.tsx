@@ -92,6 +92,16 @@ export const Login: React.FC = () => {
           </p>
         </div>
 
+        {/* Render Cold Start Warning */}
+        <div className="bg-blue-200 border-[3px] border-black p-4 mb-6 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+          <h3 className="font-black text-black uppercase tracking-wider mb-1 flex items-center gap-2">
+            <span>⏳</span> Server Wake-Up Notice
+          </h3>
+          <p className="text-sm font-bold text-black/90 leading-relaxed">
+            This demo is hosted on a free Render instance. If it hasn't been visited recently, the backend goes to sleep. It may take <strong>1–2 minutes to wake up</strong> on your first login or signup. Please be patient!
+          </p>
+        </div>
+
         <NeoCard accent="border-t-neo-yellow" className="p-6 sm:p-8">
           <div className="flex border-b-3 border-black mb-6">
             <button

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 interface BackendBannerProps {
   isOnline: boolean;
 }
@@ -22,9 +21,9 @@ export const BackendBanner: React.FC<BackendBannerProps> = ({ isOnline }) => {
       <div className="flex items-center gap-2 font-bold text-sm">
         <span className="text-lg">⚠️</span>
         <span>
-          <strong>Backend offline</strong> — price updates are paused. Start the
-          FastAPI server at{' '}
-          <code className="bg-black/30 px-1 rounded">localhost:8000</code> to
+          <strong>Backend offline</strong> — price updates are paused. Start the{' '}
+          <code className="bg-black/30 px-1 rounded">{import.meta.env.VITE_BACKEND}</code> server at{' '}
+          <code className="bg-black/30 px-1 rounded">{import.meta.env.VITE_API_URL}</code> to
           resume.
         </span>
       </div>

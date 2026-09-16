@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ─── Tailwind v4 CSS-based theme (replaces tailwind.config.ts) ─────────── */
+@theme {
+  /* Colors */
+  --color-neo-yellow: #FFE500;
+  --color-neo-pink: #FF3E6C;
+  --color-neo-lime: #BFFF00;
+  --color-neo-green: #00C853;
+  --color-neo-red: #FF1744;
+  --color-neo-bg: #F5F0E8;
+
+  /* Font */
+  --font-space: "Space Grotesk", ui-monospace, monospace;
+
+  /* Hard-offset neo-brutalism shadows (no blur) */
+  --shadow-neo: 4px 4px 0px #000000;
+  --shadow-neo-sm: 2px 2px 0px #000000;
+  --shadow-neo-lg: 6px 6px 0px #000000;
+
+  /* Custom border width so border-3 works */
+  --border-width-3: 3px;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-space);
+    background-color: var(--color-neo-bg);
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-neo-yellow);
+    color: #000;
+  }
+}
+
+/* ─── Components ─────────────────────────────────────────────────────────── */
+@layer components {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-neo-bg);
+    border-left: 2px solid #000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #000;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+/* ─── Simulate-flash animation ───────────────────────────────────────────── */
+@keyframes card-flash {
+  0% {
+    transform: scale(1);
+    box-shadow: 4px 4px 0px #000;
+    background-color: #fff;
+  }
+
+  25% {
+    transform: scale(1.03);
+    box-shadow: 6px 6px 0px #000;
+    background-color: #FFE500;
+  }
+
+  60% {
+    transform: scale(1.015);
+    box-shadow: 5px 5px 0px #000;
+    background-color: #FFE500;
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 4px 4px 0px #000;
+    background-color: #fff;
+  }
+}
+
+.card-flash {
+  animation: card-flash 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}

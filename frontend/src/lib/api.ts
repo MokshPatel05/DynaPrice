@@ -42,6 +42,15 @@ export async function predictBatch(items: BatchRequestItem[]): Promise<BatchResu
 // Auth API
 // ---------------------------------------------------------------------------
 
+function extractErrorMessage(errorData: any, fallback: string): string {
+  const detail = errorData?.detail;
+  if (typeof detail === 'string') return detail;
+  if (Array.isArray(detail) && detail.length > 0 && typeof detail[0]?.msg === 'string') {
+    return detail[0].msg;
+  }
+  return fallback;
+}
+
 export async function login(email: string, password: string) {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
@@ -51,7 +60,7 @@ export async function login(email: string, password: string) {
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => null);
-    throw new Error(errorData?.detail || 'Login failed');
+    throw new Error(extractErrorMessage(errorData, 'Login failed'));
   }
 
   return res.json();
@@ -66,7 +75,7 @@ export async function signup(email: string, password: string) {
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => null);
-    throw new Error(errorData?.detail || 'Signup failed');
+    throw new Error(extractErrorMessage(errorData, 'Signup failed'));
   }
 
   return res.json();
@@ -101,7 +110,7 @@ export async function createProduct(token: string, data: ProductCreate): Promise
   });
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    throw new Error(err?.detail || 'Failed to create product');
+    throw new Error(extractErrorMessage(err, 'Failed to create product'));
   }
   return res.json() as Promise<ProductApiResponse>;
 }

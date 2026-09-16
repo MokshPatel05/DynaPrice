@@ -18,6 +18,7 @@ export const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showWakeupNotice, setShowWakeupNotice] = useState(false);
   
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -41,6 +42,12 @@ export const Login: React.FC = () => {
     }
 
     setIsLoading(true);
+    
+    // If the request hangs for more than 20 seconds, show the wake-up notice
+    const wakeUpTimeout = setTimeout(() => {
+      setShowWakeupNotice(true);
+    }, 20000);
+
     try {
       if (isLoginMode) {
         const data = await apiLogin(email, password);
@@ -60,6 +67,7 @@ export const Login: React.FC = () => {
     } catch (err: any) {
       setError(err.message || 'Authentication failed');
     } finally {
+      clearTimeout(wakeUpTimeout);
       setIsLoading(false);
     }
   };
@@ -93,14 +101,23 @@ export const Login: React.FC = () => {
         </div>
 
         {/* Render Cold Start Warning */}
-        <div className="bg-blue-200 border-[3px] border-black p-4 mb-6 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-          <h3 className="font-black text-black uppercase tracking-wider mb-1 flex items-center gap-2">
-            <span>⏳</span> Server Wake-Up Notice
-          </h3>
-          <p className="text-sm font-bold text-black/90 leading-relaxed">
-            This demo is hosted on a free Render instance. If it hasn't been visited recently, the backend goes to sleep. It may take <strong>1–2 minutes to wake up</strong> on your first login or signup. Please be patient!
-          </p>
-        </div>
+        {showWakeupNotice && (
+          <div className="bg-blue-200 border-[3px] border-black p-4 mb-6 shadow-[4px_4px_0px_rgba(0,0,0,1)] relative">
+            <button 
+              onClick={() => setShowWakeupNotice(false)}
+              className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center bg-white border-2 border-black font-black hover:bg-neo-red hover:text-white transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+            <h3 className="font-black text-black uppercase tracking-wider mb-1 flex items-center gap-2 pr-6">
+              <span>⏳</span> Server Wake-Up Notice
+            </h3>
+            <p className="text-sm font-bold text-black/90 leading-relaxed">
+              This demo is hosted on a free Render instance. If it hasn't been visited recently, the backend goes to sleep. It may take <strong>1–2 minutes to wake up</strong> on your first login or signup. Please be patient!
+            </p>
+          </div>
+        )}
 
         <NeoCard accent="border-t-neo-yellow" className="p-6 sm:p-8">
           <div className="flex border-b-3 border-black mb-6">

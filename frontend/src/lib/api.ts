@@ -1,7 +1,7 @@
 import type { BatchRequestItem, BatchResponse, BatchResultItem, ProductCreate, ProductApiResponse } from '../types/product';
 
 // M3 fix: Use VITE_API_URL env variable instead of hardcoded localhost
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
+const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_URL_DEPLOYED || "http://localhost:8000";
 
 // ---------------------------------------------------------------------------
 // Health
